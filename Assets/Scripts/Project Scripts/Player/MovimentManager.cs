@@ -20,7 +20,6 @@ public class MovimentManager : MonoBehaviour{
         //SourcePlayerRotation();
     }
 
-
     void Movimentation(){
         leftStick = Vector2.ClampMagnitude(leftStick, 1);
         rightStick = Vector2.ClampMagnitude(rightStick, 1);
@@ -33,16 +32,18 @@ public class MovimentManager : MonoBehaviour{
 
         //Rotacionar o personagem
         if (rightStickDirection != Vector3.zero){
-            MeshRotation(rightStickDirection);
+            MeshRotation(rightStickDirection, PlayerManager.instance.meshObject);
         }
         else{
-            MeshRotation(leftStickDirection);
+            MeshRotation(leftStickDirection, PlayerManager.instance.meshObject);
         }
     }
 
-    void MeshRotation(Vector3 direction){
-        Quaternion axisDir = Quaternion.FromToRotation(PlayerManager.instance.meshObject.transform.forward, direction);
-        PlayerManager.instance.meshObject.transform.rotation = Quaternion.Slerp(PlayerManager.instance.meshObject.transform.rotation, axisDir * PlayerManager.instance.meshObject.transform.rotation, rotationSpeed * Time.deltaTime);
+    void MeshRotation(Vector3 direction, GameObject mesh){
+        if (direction != Vector3.zero){
+            var quaternionLook = Quaternion.LookRotation(direction, transform.up);
+            mesh.transform.rotation = Quaternion.Slerp(mesh.transform.rotation, quaternionLook, rotationSpeed * Time.deltaTime);
+        }
     }
 
     void SourcePlayerRotation(){ //Not used in moment
