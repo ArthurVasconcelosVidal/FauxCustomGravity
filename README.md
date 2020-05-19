@@ -3,20 +3,15 @@
 
 ##  Sistema de gravidade não centralizado
 
-A ferramenta ainda não está completamente finalizada existem dois erros que ainda precisam de correção e estou estudando para corrigilos
+A ferramenta ainda não está completamente finalizada existe um erro que ainda precisa de correção e estou estudando para corrigilo
 
-* O primeiro: o Raycast dentro do script de gravidade que faz toda a magia acontecer perde facilmente a referência dependendo da distância em que o objeto está do planeta, fazendo com que perca a referencia de direção da gravidade e apresente comportamentos "estranhos".
-
-* O segundo: Rotação da mesh do player, em alguns momentos a rotação acontece no eixo errado, fazendo a mesh ficar de cabeça para baixo e etc. 
-
+* O Raycast dentro do script de gravidade que faz toda a magia acontecer perde facilmente a referência dependendo da distância em que o objeto está do planeta, fazendo com que perca a referencia de direção da gravidade e apresente comportamentos "estranhos".
 
 ##  Non-centralized gravity system
 
-The tool is not yet completely finished there are two errors that still need correction and I am studying to correct them
+The tool is not yet completely finished there is an error that still needs correction and I am studying to correct
 
-* The first: the Raycast within the gravity script that makes all the magic happen easily loses the reference depending on the distance the object is from the planet, causing it to lose the reference of gravity direction and exhibit "strange" behaviors.
-
-* The second: Rotation of the mesh of the player, sometimes the rotation happens on the wrong axis, making the mesh upside down and so on.
+* The Raycast within the gravity script that makes all the magic easily lose the reference of distance in which object is on the planet, causing it to lose a reference to the direction of gravity and presenting "strangers" behaviours.
 
 
 | Ball Planet | Torus Planet |
