@@ -5,15 +5,17 @@ using UnityEngine;
 public class BulletBehaviour : MonoBehaviour { 
     [SerializeField] float bulletSpeed = 15;
     [SerializeField] float maxDistance = 1;
+    [SerializeField] float impactForceOnStop = 5;
+    [SerializeField] [Range(0, 1)] float lerpInterpolation = 0.5f;
     [SerializeField] [Range(0, 5)] float decreaseSpeed = 1;
     [SerializeField] [Range(0, 5)] float decreaseDistance = 1;
-    [SerializeField] bool decreaseSpeedActive = true;
-    [SerializeField] bool decreaseDistanceActive = true;
-    [SerializeField] bool rebot = true;
-    int MAX_SPEED = 100;
-    int INCREMENT_SPEED = 10;
-    float damage = 1.1f;
-    bool rotating = false;
+    [SerializeField] string rebootTag;
+    [SerializeField] string destroyOnCollisionTag;
+    [SerializeField] string bulletTag;
+    [SerializeField] bool decreaseSpeedActive = true; //Utilitario
+    [SerializeField] bool decreaseDistanceActive = true; //Utilitario
+    [SerializeField] bool rebot = true; //Utilitario
+    [SerializeField] bool destroyOnCollision = false; //Utilitario
     Rigidbody bullet_rb;
     FauxGravity bullet_gravity;
 
@@ -33,9 +35,10 @@ public class BulletBehaviour : MonoBehaviour {
     }
 
     void SetDistanceToGround(){
+        bullet_gravity.SetApplyGravity(false);
         Vector3 distAtual = transform.position - bullet_gravity.ReturnGravityRaycastHit().point;
         Vector3 bulletPosition = distAtual.normalized * maxDistance + bullet_gravity.ReturnGravityRaycastHit().point;
-        bullet_rb.MovePosition(bulletPosition);
+        bullet_rb.MovePosition(Vector3.Lerp(transform.position,bulletPosition, lerpInterpolation));
     }
 
     void BulletFauxDecay(){
@@ -50,25 +53,33 @@ public class BulletBehaviour : MonoBehaviour {
         }
     }
 
-    public float Damage(){
-        return damage;
-    }
-
-    void DoubleSpeed(){
-        if (bulletSpeed > MAX_SPEED){
-            bulletSpeed = MAX_SPEED;
-            damage = 2;
-        }
-        else{
-            bulletSpeed += INCREMENT_SPEED;
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision){
+    void CollisionInteractions(Collision collision){
         if (rebot){
-            if (collision.gameObject.CompareTag("Reboot") || collision.gameObject.CompareTag("Bullet"))
+            if (collision.gameObject.CompareTag(rebootTag) || collision.gameObject.CompareTag(bulletTag))
                 Reflection(collision.contacts[0].normal);
         }
+        if (destroyOnCollision){
+            if (collision.gameObject.CompareTag(destroyOnCollisionTag) || destroyOnCollisionTag == ""){
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
+    //Rebot Function
+    #region Reboot Function
+    public void Reflection(Vector3 colisionPoint){
+        float dot = Vector3.Dot(transform.forward.normalized, colisionPoint);
+        float arCos = Mathf.Acos(dot) * Mathf.Rad2Deg;
+        Vector3 cross = Vector3.Cross(transform.forward.normalized, colisionPoint);
+        Vector3 localCross = transform.InverseTransformDirection(cross);
+        float angle = arCos;
+        if (localCross.y < 0) angle = -angle;
+        bullet_rb.MoveRotation(Quaternion.AngleAxis(angle, transform.up) * transform.rotation);
+    }
+    #endregion
+
+    private void OnCollisionEnter(Collision collision){
+        CollisionInteractions(collision);
     }
 
     //Spawner Configuration Functions
@@ -98,16 +109,4 @@ public class BulletBehaviour : MonoBehaviour {
     }
     #endregion
 
-    //Rebot Function
-    #region Reboot Function
-    public void Reflection(Vector3 colisionPoint){
-        float dot = Vector3.Dot(transform.forward.normalized, colisionPoint);
-        float arCos = Mathf.Acos(dot) * Mathf.Rad2Deg;
-        Vector3 cross = Vector3.Cross(transform.forward.normalized, colisionPoint);
-        Vector3 localCross = transform.InverseTransformDirection(cross);
-        float angle = arCos;
-        if (localCross.y < 0) angle = -angle;
-        bullet_rb.MoveRotation(Quaternion.AngleAxis(angle, transform.up) * transform.rotation);
-    }
-    #endregion
 }

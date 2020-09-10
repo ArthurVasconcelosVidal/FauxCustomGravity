@@ -92,10 +92,12 @@ GameObject:
   - component: {fileID: 3602040578087453862}
   - component: {fileID: 3602040578087453856}
   - component: {fileID: 3602040578087453857}
+  - component: {fileID: 2352323510323912268}
   - component: {fileID: 3602040578087453858}
   - component: {fileID: 3602040578087453859}
   - component: {fileID: 3602040578087453860}
   - component: {fileID: 3602040578087453861}
+  - component: {fileID: 4422080980810105322}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -179,6 +181,22 @@ MonoBehaviour:
   m_DefaultActionMap: Actions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2352323510323912268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3602040578087453864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08fe367c4cf9f664d99785a9dc35dbcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freeLookCM: {fileID: 0}
+  mainCamera: {fileID: 0}
+  camSpeedY: 1
+  camSpeedX: 80
 --- !u!114 &3602040578087453858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,10 +212,17 @@ MonoBehaviour:
   gravity_Layer:
     serializedVersion: 2
     m_Bits: 256
+  gravityTag: 
+  groundTag: 
   magnitudeForce: 50
   gameObjectCollider: {fileID: 3602040578087453862}
-  gravityReference: {fileID: 3602040578087453864}
+  gravityUser: {fileID: 0}
+  planetReference: {fileID: 0}
+  forceDirectionInterpolation: 0.5
   applyGravity: 1
+  canChangePlanets: 0
+  transitionForceCorrection: 1
+  setRigidyBodyRotation: 1
 --- !u!114 &3602040578087453859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +238,9 @@ MonoBehaviour:
   rigidyBody: {fileID: 3602040578087453856}
   fauxGravity: {fileID: 3602040578087453858}
   movimentManager: {fileID: 3602040578087453860}
+  actionManager: {fileID: 0}
   meshObject: {fileID: 3602040577342369392}
+  cameraManager: {fileID: 0}
 --- !u!114 &3602040578087453860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +267,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100614bf711603a40b8bfa51af17c6fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4422080980810105322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3602040578087453864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069d8b807c5ec05448d26141c4c29381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 0
 --- !u!1 &3602040578176813857
 GameObject:
   m_ObjectHideFlags: 0

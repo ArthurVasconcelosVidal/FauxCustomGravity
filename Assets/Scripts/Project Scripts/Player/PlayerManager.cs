@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerManager : MonoBehaviour{
     static public PlayerManager instance;
@@ -8,7 +9,11 @@ public class PlayerManager : MonoBehaviour{
     public Rigidbody rigidyBody;
     public FauxGravity fauxGravity;
     public MovimentManager movimentManager;
+    public ActionManager actionManager;
+    public CameraManager cameraManager;
     public GameObject meshObject; //inspector
+    public GameObject mainCamera; //inspector
+
 
     void Awake(){
         if (instance == null){
@@ -19,4 +24,5 @@ public class PlayerManager : MonoBehaviour{
         }
         DontDestroyOnLoad(instance);
     }
+
 }
